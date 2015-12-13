@@ -15,6 +15,20 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/latex', function(req, res, next){
+  var tex = req.query.tex
+  mjAPI.typeset({
+            math: tex,
+            format: "TeX", // "inline-TeX", "MathML"
+            png:true, //  svg:true, 
+    }, function (data) {
+        res.header('Content-Type', 'image/png');
+        res.status(200).send(new Buffer(data.png.slice(22),'base64'));
+    }); 
+}
+);
+
+
 router.get('/png', function(req, res, next) {
     var id  = req.query.id
     var tex = req.query.tex
@@ -25,10 +39,7 @@ router.get('/png', function(req, res, next) {
     }, function (data) {
         res.header('Content-Type', 'image/png');
         res.status(200).send(new Buffer(data.png.slice(22),'base64'));
-        
-//        res.render('index', {title: 'Expresws1 ee', number: data.png});
     });
-//    res.render('index', {title: 'Expresws1', number: id}); 
 });
 
 
