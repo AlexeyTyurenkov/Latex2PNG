@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/latex', function(req, res, next){
-  var tex = req.query.tex
+  var tex = decodeURIComponent(req.query.tex);
   mjAPI.typeset({
             math: tex,
             format: "TeX", // "inline-TeX", "MathML"

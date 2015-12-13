@@ -54,7 +54,7 @@ html(lang='en')
     script.
         var something = function() {
           var img = document.querySelector('#result')
-          var data = document.querySelector('#latex').value
+          var data = encodeURIComponent(document.querySelector('#latex').value)
           img.src = "http://localhost:3000/png?tex=" + data
 
         }
