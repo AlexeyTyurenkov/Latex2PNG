@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 // a simple TeX-input example
 var mjAPI = require("../node_modules/MathJax-node/lib/mj-single.js");
 mjAPI.config({
@@ -15,7 +16,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/latex', function(req, res, next){
+router.get('/inlinepng', function(req, res, next){
   var tex = decodeURIComponent(req.query.tex);
   mjAPI.typeset({
             math: tex,
@@ -28,15 +29,16 @@ router.get('/latex', function(req, res, next){
 }
 );
 
-router.post('/latex', function(req, res, next){
-  var tex = decodeURIComponent(req.query.tex);
+router.post('/inlinepng', function(req, res, next){
+  var tex = req.body.tex;
+  console.log(tex);
   mjAPI.typeset({
             math: tex,
             format: "TeX", // "inline-TeX", "MathML"
             png:true, //  svg:true, 
     }, function (data) {
         res.header('Content-Type', 'image/png');
-        res.status(200).send(new Buffer(data.png.slice(22),'base64'));
+        res.status(200).send(data.png);
     }); 
 }
 );
