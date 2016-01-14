@@ -28,6 +28,20 @@ router.get('/latex', function(req, res, next){
 }
 );
 
+router.post('/latex', function(req, res, next){
+  var tex = decodeURIComponent(req.query.tex);
+  mjAPI.typeset({
+            math: tex,
+            format: "TeX", // "inline-TeX", "MathML"
+            png:true, //  svg:true, 
+    }, function (data) {
+        res.header('Content-Type', 'image/png');
+        res.status(200).send(new Buffer(data.png.slice(22),'base64'));
+    }); 
+}
+);
+
+
 
 router.get('/png', function(req, res, next) {
     var id  = req.query.id
