@@ -23,7 +23,7 @@ router.get('/latex', function(req, res, next){
             png:true, //  svg:true, 
     }, function (data) {
         res.header('Content-Type', 'image/png');
-        res.status(200).send(new Buffer(data.png.slice(22),'base64'));
+        res.status(200).end(data.png);
     }); 
 }
 );

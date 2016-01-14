@@ -45,6 +45,10 @@ html(lang='en')
        h1 And take it here
       .center
         img(id='result')   
+    .container
+        h1 Or here
+        .center
+           .container(id = 'result2')
     // Bootstrap core JavaScript
     // ==================================================
     // Placed at the end of the document so the pages load faster
@@ -101,9 +105,14 @@ html(lang='en')
 
           var img = document.querySelector('#result');
           var data = encodeURIComponent($("#latex").val());
+  
+          img.src = "http://m2i.work/png?tex=" + data
+        // console.log(img.src);
+
+
           // alert(data);
-          $.post("latex", {tex: data}, function(data){ 
-          // console.log(data); 
-          // console.log(Base64.encode(data)); 
-          img.src = 'data:image/png;base64,'+ base64_encode(data); });
+          $.get("latex", {tex: data}, function(data){ 
+          console.log(data); 
+          console.log(base64_encode(data)); 
+          $('#result2').html('<img src="' + data + '" />'); });
         }
